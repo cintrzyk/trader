@@ -3,13 +3,12 @@ import firebase from 'firebase';
 
 class Dashboard extends Component {
   state = { items: [] };
+  firebaseRef = firebase.database().ref('events');
 
   componentWillMount() {
-    this.firebaseRef = firebase.database().ref('events');
-    this.firebaseRef.on('child_added', dataSnap =>
-      this.setState({
-        items: dataSnap.val(),
-      }));
+    this.firebaseRef.on('child_added', (dataSnap) => {
+      this.setState(prevState => ({ items: [...prevState.items, dataSnap.val()] }));
+    });
   }
 
   componentWillUnmount() {
