@@ -7,7 +7,6 @@ class Dashboard extends Component {
   componentWillMount() {
     this.firebaseRef = firebase.database().ref('events');
     this.firebaseRef.on('child_added', dataSnap =>
-      Array.isArray(dataSnap) &&
       this.setState({
         items: dataSnap.val(),
       }));
