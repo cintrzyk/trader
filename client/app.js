@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
 import Dashboard from './Dashboard';
+import './styles/app.scss';
 
 const { SSR } = process.env;
 
