@@ -54,22 +54,53 @@
     lodash "^4.2.0"
     to-fast-properties "^2.0.0"
 
-"@firebase/app@^0.1.1":
+"@firebase/app@0.1.4", "@firebase/app@^0.1.1":
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/@firebase/app/-/app-0.1.4.tgz#595b85390b1dc5846a88933d65d4fae7208f835d"
   dependencies:
     "@firebase/util" "0.1.4"
 
-"@firebase/database@^0.1.3":
+"@firebase/auth@0.3.0":
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/@firebase/auth/-/auth-0.3.0.tgz#971c22d894205454e14850848012235c44459086"
+
+"@firebase/database@0.1.5", "@firebase/database@^0.1.3":
   version "0.1.5"
   resolved "https://registry.yarnpkg.com/@firebase/database/-/database-0.1.5.tgz#6e5b0da6f0be15cba30c694e2ff24c6a5f03c182"
   dependencies:
     "@firebase/util" "0.1.4"
     faye-websocket "0.11.1"
 
+"@firebase/firestore@0.2.1":
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/@firebase/firestore/-/firestore-0.2.1.tgz#b60dbaa59626d6f84d4316fcdc5aa0c0eaa59e38"
+  dependencies:
+    "@firebase/webchannel-wrapper" "0.2.5"
+    grpc "^1.7.1"
+
+"@firebase/messaging@0.1.5":
+  version "0.1.5"
+  resolved "https://registry.yarnpkg.com/@firebase/messaging/-/messaging-0.1.5.tgz#11ca0e9215ea54839cc80947eeec548cd21ac251"
+  dependencies:
+    "@firebase/util" "0.1.4"
+
+"@firebase/polyfill@0.1.3":
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/@firebase/polyfill/-/polyfill-0.1.3.tgz#9b0a2f93ad629e2c433b692e0cd5f34f35229c12"
+  dependencies:
+    promise-polyfill "^6.0.2"
+
+"@firebase/storage@0.1.4":
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/@firebase/storage/-/storage-0.1.4.tgz#3aca74b6dcb4e87569ecc07153ea0f4ecb883ca0"
+
 "@firebase/util@0.1.4":
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/@firebase/util/-/util-0.1.4.tgz#80d7f6039ff6cb94215ddd44d3cb09f6d32902ea"
+
+"@firebase/webchannel-wrapper@0.2.5":
+  version "0.2.5"
+  resolved "https://registry.yarnpkg.com/@firebase/webchannel-wrapper/-/webchannel-wrapper-0.2.5.tgz#11ccb45505cb56d4bc0a9a09712b14585248e784"
 
 "@google-cloud/common-grpc@^0.4.0":
   version "0.4.3"
@@ -2183,6 +2214,10 @@ doctrine@^2.0.0:
     esutils "^2.0.2"
     isarray "^1.0.0"
 
+dom-storage@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/dom-storage/-/dom-storage-2.0.2.tgz#ed17cbf68abd10e0aef8182713e297c5e4b500b0"
+
 dom-walk@^0.1.0:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/dom-walk/-/dom-walk-0.1.1.tgz#672226dc74c8f799ad35307df936aba11acd6018"
@@ -2835,6 +2870,20 @@ firebase-admin@^5.5.1:
     google-auth-library "^0.10.0"
     jsonwebtoken "7.4.3"
     node-forge "0.7.1"
+
+firebase@^4.8.0:
+  version "4.8.0"
+  resolved "https://registry.yarnpkg.com/firebase/-/firebase-4.8.0.tgz#c0b5bad5c1241222f3a6f06065ea121ebbc14fd3"
+  dependencies:
+    "@firebase/app" "0.1.4"
+    "@firebase/auth" "0.3.0"
+    "@firebase/database" "0.1.5"
+    "@firebase/firestore" "0.2.1"
+    "@firebase/messaging" "0.1.5"
+    "@firebase/polyfill" "0.1.3"
+    "@firebase/storage" "0.1.4"
+    dom-storage "^2.0.2"
+    xmlhttprequest "^1.8.0"
 
 flat-cache@^1.2.1:
   version "1.3.0"
@@ -5543,6 +5592,10 @@ progress@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/progress/-/progress-2.0.0.tgz#8a1be366bf8fc23db2bd23f10c6fe920b4389d1f"
 
+promise-polyfill@^6.0.2:
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/promise-polyfill/-/promise-polyfill-6.1.0.tgz#dfa96943ea9c121fca4de9b5868cb39d3472e057"
+
 promise@^7.1.1:
   version "7.3.1"
   resolved "https://registry.yarnpkg.com/promise/-/promise-7.3.1.tgz#064b72602b18f90f29192b8b1bc418ffd1ebd3bf"
@@ -7255,6 +7308,10 @@ xdg-basedir@^3.0.0:
 xml-name-validator@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/xml-name-validator/-/xml-name-validator-2.0.1.tgz#4d8b8f1eccd3419aa362061becef515e1e559635"
+
+xmlhttprequest@^1.8.0:
+  version "1.8.0"
+  resolved "https://registry.yarnpkg.com/xmlhttprequest/-/xmlhttprequest-1.8.0.tgz#67fe075c5c24fef39f9d65f5f7b7fe75171968fc"
 
 xtend@^4.0.0, xtend@^4.0.1, xtend@~4.0.1:
   version "4.0.1"

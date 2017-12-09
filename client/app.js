@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
 import Dashboard from './Dashboard';
-import './styles/app.scss';
+import './firebase';
 
 const { SSR } = process.env;
 
