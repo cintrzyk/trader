@@ -4,10 +4,10 @@ import {
   CLIENT_EVENTS,
   RTM_EVENTS,
 } from '@slack/client';
+import moment from 'moment';
 import { slack as config } from '../config/config';
 import GithubClient from './github/client';
 import { parseGithubPRText } from './github/pr-parser';
-import moment from 'moment';
 
 const slack = new RtmClient(config.botToken);
 const slackWeb = new WebClient(config.botToken);
@@ -29,6 +29,11 @@ const getGithubMessage = data => [{
     {
       title: `+${data.additions} -${data.deletions}`,
       value: `LOC changed in *${data.changed_files}* files`,
+      short: true,
+    },
+    {
+      title: '#pr-id',
+      value: data.id,
       short: true,
     },
     {
@@ -61,6 +66,7 @@ slack.on(RTM_EVENTS.MESSAGE, (payload) => {
 
   githubClient.fetchPullRequest(githubPRUrl[0]).then((response) => {
     console.log('Github API PR data:', response.data);
+
     return slackWeb.chat.postMessage(payload.channel, null, {
       as_user: true,
       attachments: getGithubMessage(response.data),
