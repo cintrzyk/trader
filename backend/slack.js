@@ -7,30 +7,32 @@ import {
 import { slack as config } from '../config/config';
 import GithubClient from './github/client';
 import { parseGithubPRText } from './github/pr-parser';
+import moment from 'moment';
 
 const slack = new RtmClient(config.botToken);
 const slackWeb = new WebClient(config.botToken);
 
 const getGithubMessage = data => [{
-  title: 'TTM-234 Slack API Documentation <http://wp.pl|#12>',
-  text: '.. to allow the `bundle install` to finish installing gems successfully.\n',
+  title: data.title,
+  title_link: data.url,
+  text: data.body,
   color: '#e1e4e8',
-  author_icon: 'https://avatars3.githubusercontent.com/u/2749593?v=4',
-  author_link: 'http://wp.pl',
-  author_name: 'berniechiu',
+  author_icon: data.user.avatar_url,
+  author_link: data.user.url,
+  author_name: data.user.login,
   footer: 'Github API',
   footer_icon: 'https://d2bbtvgnhux6eq.cloudfront.net/assets/favicon-github-0332aa660c6548e285079410739397df.png',
-  ts: 123456789,
+  ts: moment(data.created_at).unix(),
   mrkdwn_in: ['pretext', 'text', 'fields'],
   callback_id: 'review_action',
   fields: [
     {
-      title: '+23 -2',
-      value: 'LOC changed in *12* files',
+      title: `+${data.additions} -${data.deletions}`,
+      value: `LOC changed in *${data.changed_files}* files`,
       short: true,
     },
     {
-      title: '+123',
+      title: `+${data.commits}`,
       value: 'Commits',
       short: true,
     },

@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const commonModule = require('./webpack.common.js');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
   entry: [
@@ -8,6 +9,7 @@ module.exports = {
     path.resolve(__dirname, 'client', 'app.js'),
   ],
   plugins: [
+    new ExtractTextPlugin('app.css'),
     new webpack.NamedModulesPlugin(),
     new webpack.HotModuleReplacementPlugin(),
   ],
