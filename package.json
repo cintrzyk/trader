@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "CR tool",
   "engines": {
-    "node": "6.12.0"
+    "node": "8.9.3"
   },
   "author": "Marcin Brzeziński <cintrzyk@gmail.com>",
   "dependencies": {
