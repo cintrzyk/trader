@@ -33,7 +33,7 @@ router.post('/review', urlencodedParser, (req, res) => {
     res.status(403).end('Access forbidden');
   } else if (actionJSONPayload.actions[0].name === 'review_done') {
     const msg = {
-      text: `:white_check_mark: ${actionJSONPayload.original_message.attachments[0].title} - review done by @cinek in 22m`,
+      text: `:white_check_mark: ${actionJSONPayload.original_message.attachments[0].title} - review done by <@${actionJSONPayload.user.name}> in 22m`,
       attachments: [],
     };
     sendMessageToSlackResponseURL(actionJSONPayload.response_url, msg); // on review done
