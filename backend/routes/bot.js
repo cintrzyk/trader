@@ -36,13 +36,13 @@ router.post('/review', urlencodedParser, (req, res) => {
   if (actionJSONPayload.token !== config.verificationToken) {
     res.status(403).end('Access forbidden');
   } else if (actionJSONPayload.actions[0].name === 'review_done') {
-    const finishedAt = moment().toString();
+    const finishedAt = moment();
     db.ref(`pr/${getPrID(actionJSONPayload)}`).update({
-      review_finished_at: finishedAt,
+      endAt: finishedAt.unix(),
     }, () => {
-      db.ref(`pr/${getPrID(actionJSONPayload)}/review_started_at`).once('value').then((snapshot) => {
-        const startedAt = snapshot.val();
-        const duration = moment.duration(moment(finishedAt).diff(moment(startedAt), 'seconds'), 'seconds').humanize();
+      db.ref(`pr/${getPrID(actionJSONPayload)}/startAt`).once('value').then((snapshot) => {
+        const startedAt = moment.unix(snapshot.val());
+        const duration = moment.duration(finishedAt.diff(startedAt, 'seconds'), 'seconds').humanize();
         const msg = {
           text: `:white_check_mark: ${actionJSONPayload.original_message.attachments[0].title} - review done by <@${actionJSONPayload.user.name}> in ${duration}`,
           attachments: [],
@@ -52,7 +52,7 @@ router.post('/review', urlencodedParser, (req, res) => {
     });
   } else {
     db.ref(`pr/${getPrID(actionJSONPayload)}`).set({
-      review_started_at: moment().toString(),
+      startAt: moment().unix(),
     });
 
     const message = {
