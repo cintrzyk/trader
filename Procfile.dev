@@ -1,0 +1,2 @@
+app: yarn start
+localtunnel: lt --port 3000 --subdomain traderbot
