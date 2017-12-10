@@ -1,0 +1,41 @@
+@import '../variables';
+
+.stats-badge {
+  &__icon,
+  &__counter
+  &__label {
+    text-align: center;
+  }
+
+  &__counter,
+  &__label {
+    flex: 1;
+  }
+
+  &__icon {
+    background: $dark-color;
+    color: $white-color;
+    padding: 25px 0;
+  }
+
+  &__content {
+    display: flex;
+    align-items: center;
+    background: $light-dark-color;
+    padding: 15px 0;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+  }
+
+  &__counter {
+    color: $white-color;
+    text-align: center;
+    font-size: 54px;
+    font-weight: $fw-bold;
+  }
+
+  &__label {
+    color: $gray-color;
+    font-weight: $fw-light;
+  }
+}

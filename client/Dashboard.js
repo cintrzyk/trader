@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import firebase from 'firebase';
 import moment from 'moment';
+import StatsBadge from './components/StatsBadge';
 
 class Dashboard extends Component {
   state = {
     items: [],
   };
-  firebaseRef = firebase.database().ref('events');
+  firebaseRef = firebase.database().ref('pr');
 
   componentWillMount() {
     this.firebaseRef.on('child_added', (dataSnap) => {
@@ -38,11 +39,12 @@ class Dashboard extends Component {
   render() {
     return (
       <div>
-        {
-          this.state.items.map(item => (
-            <div key={item.id}>{item.id}: {item.timestamp}</div>
-          ))
-        }
+        <div className="badge-container">
+          <StatsBadge />
+          <StatsBadge />
+          <StatsBadge />
+          <StatsBadge />
+        </div>
       </div>
     );
   }
