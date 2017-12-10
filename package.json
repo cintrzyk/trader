@@ -54,9 +54,10 @@
   },
   "scripts": {
     "lint": "eslint .",
-    "start": "yarn run server:dev & yarn run client:dev",
+    "start": "yarn run server:dev:build & yarn run server:dev & yarn run client:dev",
     "client:dev": "webpack-dev-server --hotOnly --config webpack.client.dev.config.js",
-    "server:dev": "nodemon server.js --exec babel-node --ignore client/",
+    "server:dev": "nodemon server.bundle.js --ignore client/",
+    "server:dev:build": "babel-node run-server.js",
     "test": "jest",
     "test:watch": "jest --watch"
   }

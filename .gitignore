@@ -58,7 +58,8 @@ typings/
 .env
 
 public/assets
-.server.build.js
+server.bundle.js
+styles-bundle.css
 
 .DS_Store
 

@@ -1,15 +1,14 @@
 const path = require('path');
 const webpack = require('webpack');
-const commonModule = require('./webpack.common.js');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const merge = require('webpack-merge');
+const commonConfig = require('./webpack.common.js');
 
-module.exports = {
+module.exports = merge({
   entry: [
     'react-hot-loader/patch',
     path.resolve(__dirname, 'client', 'app.js'),
   ],
   plugins: [
-    new ExtractTextPlugin('app.css'),
     new webpack.NamedModulesPlugin(),
     new webpack.HotModuleReplacementPlugin(),
   ],
@@ -27,5 +26,4 @@ module.exports = {
     path: path.resolve(__dirname, 'public'),
     publicPath: 'http://127.0.0.1:3001/',
   },
-  module: commonModule,
-};
+}, commonConfig);
