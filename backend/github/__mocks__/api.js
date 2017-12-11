@@ -2,16 +2,6 @@
 import api from '../api';
 import MockAdapter from 'axios-mock-adapter';
 
-// module.exports = new MockAdapter(api);
-
-// const api = axios.create({
-//   baseURL: 'https://api.github.com/',
-// });
-
-// apiMock.get = () => {
-//   console.log('ELOOO')
-// };
-
 const mock = new MockAdapter(api);
 console.log('!!!!####', `${process.env.GITHUB_ORG_NAME}/transterra/pull/321`);
 
