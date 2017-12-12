@@ -1,6 +1,5 @@
-jest.mock('../../src/github/api');
-
-const Client = require('../../src/github/client');
+import Client from '../../backend/github/client';
+import apiMock from '../__mocks__/api';
 
 const client = new Client();
 
