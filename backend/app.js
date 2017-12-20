@@ -2,6 +2,7 @@ import express from 'express';
 import morgan from 'morgan';
 import React from 'react';
 import { renderToString, renderToStaticMarkup } from 'react-dom/server';
+import './db/firebase';
 import DashboardApp from '../client/Dashboard';
 import Layout from '../client/Layout';
 import botRoutes from './routes/bot';

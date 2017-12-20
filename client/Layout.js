@@ -11,6 +11,7 @@ const Layout = props => (
     <body>
       <div id="react-app" className="app" dangerouslySetInnerHTML={{ __html: props.children }} />
       <script src="http://localhost:3001/app.js" />
+      <script src="https://use.fontawesome.com/2e54a8e14f.js" />
     </body>
   </html>
 );

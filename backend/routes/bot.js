@@ -2,13 +2,11 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import request from 'request';
 import moment from 'moment';
+import firebase from '../db/firebase';
 import { slack as config } from '../../config/config';
-import db from './../db/firebase';
 
 const router = express.Router();
 const urlencodedParser = bodyParser.urlencoded({ extended: false });
-
-const getPrID = (actionJSONPayload) => actionJSONPayload.original_message.attachments[0].fields[1].value;
 
 const sendMessageToSlackResponseURL = (responseURL, JSONmessage) => {
   const postOptions = {
@@ -36,23 +34,29 @@ router.post('/review', urlencodedParser, (req, res) => {
   if (actionJSONPayload.token !== config.verificationToken) {
     res.status(403).end('Access forbidden');
   } else if (actionJSONPayload.actions[0].name === 'review_done') {
-    const finishedAt = moment();
-    db.ref(`pr/${getPrID(actionJSONPayload)}`).update({
-      endAt: finishedAt.unix(),
-    }, () => {
-      db.ref(`pr/${getPrID(actionJSONPayload)}/startAt`).once('value').then((snapshot) => {
-        const startedAt = moment.unix(snapshot.val());
-        const duration = moment.duration(finishedAt.diff(startedAt, 'seconds'), 'seconds').humanize();
+    const messageId = `${actionJSONPayload.channel.id}__${actionJSONPayload.message_ts}`;
+    const mEndAt = moment.unix(actionJSONPayload.action_ts);
+    const messageRef = firebase.firestore().collection('slack_messages').doc(messageId);
+    messageRef.update({
+      cr_end_at: mEndAt.toDate(),
+    });
+    messageRef.get().then((doc) => {
+      if (doc.exists) {
+        const { cr_start_at: startAt } = doc.data();
+        const duration = moment.duration(mEndAt.diff(startAt, 'seconds'), 'seconds').humanize();
         const msg = {
           text: `:white_check_mark: ${actionJSONPayload.original_message.attachments[0].title} - review done by <@${actionJSONPayload.user.name}> in ${duration}`,
           attachments: [],
         };
         sendMessageToSlackResponseURL(actionJSONPayload.response_url, msg); // on review done
-      });
+      }
     });
   } else {
-    db.ref(`pr/${getPrID(actionJSONPayload)}`).set({
-      startAt: moment().unix(),
+    const messageId = `${actionJSONPayload.channel.id}__${actionJSONPayload.message_ts}`;
+    firebase.firestore().collection('slack_messages').doc(messageId).update({
+      cr_start_at: firebase.firestore.FieldValue.serverTimestamp(),
+      cr_user_id: actionJSONPayload.user.id,
+      cr_user_name: actionJSONPayload.user.name,
     });
 
     const message = {

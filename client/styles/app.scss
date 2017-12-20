@@ -7,16 +7,21 @@ body {
   background: $bg-color;
 }
 
+.app {
+  font-family: 'Oswald', sans-serif;
+  padding: 25px 60px;
+}
+
 .badge-container {
   display: flex;
-  padding: 10px;
+  margin-bottom: 25px;
 
   .stats-badge {
     flex-basis: 100%;
-    margin: 5px;
-  }
-}
+    margin-right: 15px;
 
-.app {
-  font-family: 'Oswald', sans-serif;
+    &:last-child {
+      margin-right: 0;
+    }
+  }
 }

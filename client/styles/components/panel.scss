@@ -1,0 +1,17 @@
+@import '../variables';
+
+.panel {
+  display: inline-block;
+  box-shadow: 0 0 32px 0 rgba(0, 0, 0, .22);
+  background: linear-gradient(0deg, $woodsmoke-color, $woodsmoke-color 48%, $shark-color);
+  padding: 15px 25px;
+  border-radius: 8px;
+
+  &__title {
+    text-transform: uppercase;
+    color: $gray-color;
+    margin-bottom: 25px;
+    font-weight: $fw-light;
+    letter-spacing: 0.1rem;
+  }
+}
