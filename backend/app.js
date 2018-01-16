@@ -6,6 +6,7 @@ import './db/firebase';
 import DashboardApp from '../client/Dashboard';
 import Layout from '../client/Layout';
 import botRoutes from './routes/bot';
+import githubRoutes from './routes/github';
 import slack from './slack';
 
 const { SSR } = process.env;
@@ -23,6 +24,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/bot', botRoutes);
+app.use('/github', githubRoutes);
 
 slack.start();
 
