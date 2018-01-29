@@ -129,9 +129,11 @@ class Dashboard extends Component {
             value={this.avgTimeInSecToday()}
           />
         </div>
-        <Panel title="Waiting for review">
-          <WaitingUsers data={this.state.waitingUsers} />
-        </Panel>
+        {!!this.state.waitingUsers.length &&
+          <Panel title="Waiting for review">
+            <WaitingUsers data={this.state.waitingUsers} />
+          </Panel>
+        }
       </div>
     );
   }
