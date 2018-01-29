@@ -78,6 +78,13 @@ slack.on(RTM_EVENTS.MESSAGE, (payload) => {
     });
     firebase.firestore().collection('gh_users').doc(user.id.toString()).set(user);
 
+    if (state !== 'open') {
+      return slackWeb.chat.postMessage(payload.channel, null, {
+        as_user: true,
+        text: 'Cannot review closed pull request.',
+      });
+    }
+
     return slackWeb.chat.postMessage(payload.channel, null, {
       as_user: true,
       attachments: getGithubMessage(response.data),
