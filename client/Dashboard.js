@@ -68,24 +68,31 @@ class Dashboard extends Component {
       .orderBy('trade_available_at', 'desc')
       .limit(10)
       .onSnapshot((snap) => {
-        this.setState({ waitingUsers: [] });
-        if (!snap.size) {
-          return;
-        }
-        snap.forEach((doc) => {
-          const { gh_pr_id, trade_available_at } = doc.data();
-          this.db.collection('gh_prs').doc(gh_pr_id).get().then((prDoc) => {
-            const userId = prDoc.data().user_id;
-            this.db.collection('gh_users').doc(userId.toString()).get().then((userDoc) => {
-              this.setState(prevState => ({
-                ...prevState,
-                waitingUsers: prevState.waitingUsers.concat({
-                  ...userDoc.data(),
-                  trade_available_at,
-                }),
-              }));
+        snap.docChanges.forEach((change) => {
+          const { gh_pr_id, trade_available_at } = change.doc.data();
+
+          if (change.type === 'removed') {
+            this.setState(prevState => ({
+              ...prevState,
+              waitingUsers: prevState.waitingUsers.filter(u => u.gh_pr_id !== gh_pr_id),
+            }));
+          }
+
+          if (change.type === 'added') {
+            this.db.collection('gh_prs').doc(gh_pr_id).get().then((prDoc) => {
+              const userId = prDoc.data().user_id;
+              this.db.collection('gh_users').doc(userId.toString()).get().then((userDoc) => {
+                this.setState(prevState => ({
+                  ...prevState,
+                  waitingUsers: prevState.waitingUsers.concat({
+                    ...userDoc.data(),
+                    gh_pr_id,
+                    trade_available_at,
+                  }),
+                }));
+              });
             });
-          });
+          }
         });
       });
   }
