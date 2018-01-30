@@ -20,7 +20,7 @@ const WaitingUser = props => (
 );
 
 const WaitingUsers = ({ data }) => {
-  const mappedUsers = data.map(userData => <WaitingUser key={userData.gh_pr_id} {...userData} />);
+  const mappedUsers = data.map(userData => <WaitingUser key={userData.id} {...userData} />);
 
   return (
     <div className="waiting-users">

@@ -82,14 +82,17 @@ class Dashboard extends Component {
             this.db.collection('gh_prs').doc(gh_pr_id).get().then((prDoc) => {
               const userId = prDoc.data().user_id;
               this.db.collection('gh_users').doc(userId.toString()).get().then((userDoc) => {
-                this.setState(prevState => ({
-                  ...prevState,
-                  waitingUsers: prevState.waitingUsers.concat({
-                    ...userDoc.data(),
-                    gh_pr_id,
-                    trade_available_at,
-                  }),
-                }));
+                this.setState((prevState) => {
+                  const users = prevState.waitingUsers.filter(u => u.id !== userId);
+
+                  return {
+                    ...prevState,
+                    waitingUsers: users.concat({
+                      ...userDoc.data(),
+                      trade_available_at,
+                    }),
+                  };
+                });
               });
             });
           }
