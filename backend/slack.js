@@ -106,6 +106,7 @@ slack.on(RTM_EVENTS.MESSAGE, (payload) => {
           cr_end_at: null,
           cr_user_id: null,
           cr_user_name: null,
+          ts: res.ts,
         });
       }
     });
