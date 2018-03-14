@@ -24,8 +24,8 @@
     "react-dom": "^16.2.0",
     "request": "^2.81.0",
     "webpack": "^3.8.1",
-    "webpack-node-externals": "^1.6.0",
-    "webpack-merge": "^4.1.1"
+    "webpack-merge": "^4.1.1",
+    "webpack-node-externals": "^1.6.0"
   },
   "devDependencies": {
     "axios-mock-adapter": "^1.9.0",
@@ -42,6 +42,7 @@
     "css-loader": "^0.28.7",
     "eslint": "^4.18.2",
     "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-import-resolver-webpack": "^0.8.4",
     "eslint-plugin-import": "^2.9.0",
     "eslint-plugin-react": "^7.7.0",
     "jest": "^20.0.4",
