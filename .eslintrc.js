@@ -10,6 +10,15 @@ module.exports = {
   },
   parser: 'babel-eslint',
   rules: {
-    'quote-props': ['error', 'consistent-as-needed']
-  }
+    'quote-props': ['error', 'consistent-as-needed'],
+    'comma-dangle': ['error', 'always-multiline'],
+    'function-paren-newline': ['error', 'consistent']
+  },
+  settings: {
+    'import/resolver': {
+      webpack: {
+        'config': 'webpack.common.js'
+      },
+    },
+  },
 };
