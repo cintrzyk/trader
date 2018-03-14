@@ -33,12 +33,7 @@ const getGithubMessage = data => [{
       short: true,
     },
     {
-      title: '#pr-id',
-      value: data.id,
-      short: true,
-    },
-    {
-      title: `+${data.commits}`,
+      title: `${data.commits}`,
       value: 'Commits',
       short: true,
     },
