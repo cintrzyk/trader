@@ -5,6 +5,7 @@ const commonConfig = require('./webpack.common.js');
 
 module.exports = merge({
   entry: [
+    'babel-polyfill',
     'react-hot-loader/patch',
     path.resolve(__dirname, 'client', 'app.js'),
   ],
