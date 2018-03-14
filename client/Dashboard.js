@@ -30,6 +30,42 @@ class Dashboard extends Component {
     this.unsubscribeWaitingUsers();
   }
 
+  onWaitingUserAdded = async ({ prId, tradeAvailableAt }) => {
+    const prDoc = await this.db.collection('gh_prs').doc(prId).get();
+    const userId = prDoc.data().user_id;
+    const userDoc = await this.db.collection('gh_users').doc(userId.toString()).get();
+
+    this.setState((prevState) => {
+      const users = prevState.waitingUsers.filter(u => u.id !== userId);
+      return {
+        waitingUsers: users.concat({
+          ...userDoc.data(),
+          gh_pr_id: prId,
+          trade_available_at: tradeAvailableAt,
+        }),
+      };
+    });
+  }
+
+  onWaitingUserRemoved = (prId) => {
+    this.setState(prevState => ({
+      waitingUsers: prevState.waitingUsers.filter(u => u.gh_pr_id !== prId),
+    }));
+  }
+
+  onWaitingUserChange = snap => snap.docChanges.forEach((change) => {
+    const { gh_pr_id: prId, trade_available_at: tradeAvailableAt } = change.doc.data();
+    switch (change.type) {
+      case 'removed':
+        this.onWaitingUserRemoved(prId);
+        break;
+      case 'added':
+        this.onWaitingUserAdded({ prId, tradeAvailableAt });
+        break;
+      default:
+    }
+  })
+
   listenToUnassigned() {
     this.unsubscribeUnassigned = this.db.collection('slack_messages')
       .where('cr_user_id', '==', null)
@@ -67,37 +103,7 @@ class Dashboard extends Component {
       .where('cr_user_id', '==', null)
       .orderBy('trade_available_at', 'desc')
       .limit(10)
-      .onSnapshot((snap) => {
-        snap.docChanges.forEach((change) => {
-          const { gh_pr_id, trade_available_at } = change.doc.data();
-
-          if (change.type === 'removed') {
-            this.setState(prevState => ({
-              ...prevState,
-              waitingUsers: prevState.waitingUsers.filter(u => u.gh_pr_id !== gh_pr_id),
-            }));
-          }
-
-          if (change.type === 'added') {
-            this.db.collection('gh_prs').doc(gh_pr_id).get().then((prDoc) => {
-              const userId = prDoc.data().user_id;
-              this.db.collection('gh_users').doc(userId.toString()).get().then((userDoc) => {
-                this.setState((prevState) => {
-                  const users = prevState.waitingUsers.filter(u => u.id !== userId);
-
-                  return {
-                    ...prevState,
-                    waitingUsers: users.concat({
-                      ...userDoc.data(),
-                      trade_available_at,
-                    }),
-                  };
-                });
-              });
-            });
-          }
-        });
-      });
+      .onSnapshot(this.onWaitingUserChange);
   }
 
   avgTimeInSecToday() {
