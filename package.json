@@ -59,6 +59,7 @@
   "scripts": {
     "lint": "eslint .",
     "client:dev": "webpack-dev-server --hotOnly --config webpack.client.dev.config.js",
+    "heroku-postbuild": "webpack -p --progress",
     "server:dev": "./bin/server-hot.sh",
     "server:dev:node": "nodemon dist/server.bundle.js --ignore src/client/",
     "server:dev:webpack": "babel-node run-server.js",
