@@ -61,5 +61,3 @@ public/assets
 dist/
 
 .DS_Store
-
-firebaseAccountKey.json
