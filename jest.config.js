@@ -1,5 +1,5 @@
 module.exports = {
-  moduleFileExtensions: ['js'],
+  moduleFileExtensions: ['js', 'jsx'],
   modulePaths: [
     '<rootDir>/src',
   ],
