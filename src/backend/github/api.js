@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { github as config } from '../../config/config';
+import { github as config } from 'config/config';
 
 const api = axios.create({
   baseURL: 'https://api.github.com/',

@@ -1,5 +1,5 @@
+import { github as config } from 'config/config';
 import api from './api';
-import { github as config } from '../../config/config';
 
 class Client {
   prRegexp() {

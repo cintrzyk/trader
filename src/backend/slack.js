@@ -5,7 +5,7 @@ import {
   RTM_EVENTS,
 } from '@slack/client';
 import moment from 'moment';
-import { slack as config } from '../config/config';
+import { slack as config } from 'config/config';
 import GithubClient from './github/client';
 import { parseGithubPRText } from './github/pr-parser';
 import firebase from './db/firebase';

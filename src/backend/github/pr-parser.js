@@ -1,4 +1,4 @@
-import { github as config } from '../../config/config';
+import { github as config } from 'config/config';
 const PR_REGEXP = new RegExp(`(https:\/\/)?(www\.)?github\.com\/([a-zA-Z0-9_-]*)\/([a-zA-Z0-9_-]*)\/pull\/([0-9]*)`);
 
 export const repoName = (url) => {

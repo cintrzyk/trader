@@ -1,5 +1,5 @@
 import MockAdapter from 'axios-mock-adapter';
-import api from '../../backend/github/api';
+import api from 'backend/github/api';
 
 // import API from 'api/base';
 // import MockAdapter from 'axios-mock-adapter';

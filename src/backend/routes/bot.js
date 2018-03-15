@@ -5,8 +5,8 @@ import {
 } from '@slack/client';
 import request from 'request';
 import moment from 'moment';
+import { slack as config } from 'config/config';
 import firebase from '../db/firebase';
-import { slack as config } from '../../config/config';
 
 const db = firebase.firestore();
 const router = express.Router();

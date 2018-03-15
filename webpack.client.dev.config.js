@@ -7,7 +7,7 @@ module.exports = merge({
   entry: [
     'babel-polyfill',
     'react-hot-loader/patch',
-    path.resolve(__dirname, 'client', 'app.js'),
+    path.resolve(__dirname, 'src', 'client', 'app.js'),
   ],
   plugins: [
     new webpack.NamedModulesPlugin(),
@@ -22,9 +22,12 @@ module.exports = merge({
       'Access-Control-Allow-Origin': '*',
     },
   },
+  node: {
+    fs: 'empty',
+  },
   output: {
     filename: 'app.js',
-    path: path.resolve(__dirname, 'public'),
-    publicPath: 'http://127.0.0.1:3001/',
+    path: path.resolve(__dirname, 'public', 'assets'),
+    publicPath: 'http://127.0.0.1:3001/assets/',
   },
 }, commonConfig);
