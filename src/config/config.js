@@ -23,6 +23,13 @@ export const firebaseServiceAccount = {
   client_x509_cert_url: process.env.FS_CLIENT_X509_CERT_URL,
 };
 
+export const firebaseClient = {
+  apiKey: process.env.FS_API_KEY,
+  databaseUrl: process.env.FS_DATABASE_URL,
+  messagingSenderId: process.env.FS_MESSAGING_SENDER_ID,
+  project_id: process.env.FS_PROJECT_ID,
+};
+
 export const port = process.env.PORT;
 
 export const isProduction = process.env.NODE_ENV === 'production';
