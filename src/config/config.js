@@ -27,7 +27,7 @@ export const firebaseClient = {
   apiKey: process.env.FS_API_KEY,
   databaseUrl: process.env.FS_DATABASE_URL,
   messagingSenderId: process.env.FS_MESSAGING_SENDER_ID,
-  project_id: process.env.FS_PROJECT_ID,
+  projectId: process.env.FS_PROJECT_ID,
 };
 
 export const port = process.env.PORT;
