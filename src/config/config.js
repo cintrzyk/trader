@@ -1,5 +1,3 @@
-require('dotenv').config();
-
 export const github = {
   token: process.env.GITHUB_TOKEN,
   org: process.env.GITHUB_ORG_NAME,
