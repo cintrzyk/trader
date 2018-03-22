@@ -15,7 +15,7 @@ const slackWeb = new WebClient(config.botToken);
 
 const getGithubMessage = data => [{
   title: data.title,
-  title_link: data.url,
+  title_link: data.html_url,
   text: data.body,
   color: '#e1e4e8',
   author_icon: data.user.avatar_url,
