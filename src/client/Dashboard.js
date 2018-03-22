@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import firebase from 'firebase';
 import moment from 'moment';
 import StatsBadge from './components/StatsBadge';
@@ -115,7 +115,7 @@ class Dashboard extends Component {
 
   render() {
     return (
-      <div>
+      <Fragment>
         <div className="badge-container">
           <StatsBadge
             label="Unassigned"
@@ -143,7 +143,7 @@ class Dashboard extends Component {
             <WaitingUsers data={this.state.waitingUsers} />
           </Panel>
         }
-      </div>
+      </Fragment>
     );
   }
 }
