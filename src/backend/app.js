@@ -1,6 +1,7 @@
 import express from 'express';
 import morgan from 'morgan';
 import React from 'react';
+import 'newrelic';
 import { renderToString, renderToStaticMarkup } from 'react-dom/server';
 import { isProduction, isSsrEnabled } from 'config/config';
 import DashboardApp from 'client/Dashboard';
