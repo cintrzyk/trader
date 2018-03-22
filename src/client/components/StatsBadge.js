@@ -4,8 +4,10 @@ import '../styles/components/stats-badge.scss';
 
 const StatsBadge = props => (
   <div className="stats-badge">
-    <div className="stats-badge__icon">
-      <i className={`fa fa-${props.icon} fa-2x`} />
+    <div className="stats-badge__marker">
+      <div className="stats-badge__icon">
+        <i className={`fa fa-${props.icon} fa-2x`} />
+      </div>
     </div>
     <div className="stats-badge__content">
       <div className="stats-badge__counter">

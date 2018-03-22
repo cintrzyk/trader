@@ -11,6 +11,7 @@
     "axios": "^0.13.1",
     "babel-polyfill": "^6.26.0",
     "body-parser": "^1.18.2",
+    "bootstrap": "4.0.0",
     "chart.js": "^2.7.1",
     "dotenv": "^5.0.1",
     "express": "^4.16.2",

@@ -1,27 +1,29 @@
 @import 'variables';
+@import '~bootstrap/scss/mixins/breakpoints';
 
 html,
 body {
+  background: $bg-color;
   margin: 0;
   padding: 0;
-  background: $bg-color;
 }
 
 .app {
+  display: grid;
   font-family: 'Oswald', sans-serif;
-  padding: 25px 60px;
+  grid-gap: $grid-gap;
+  padding: 20px;
 }
 
 .badge-container {
-  display: flex;
-  margin-bottom: 25px;
-
-  .stats-badge {
-    flex-basis: 100%;
-    margin-right: 15px;
-
-    &:last-child {
-      margin-right: 0;
-    }
+  @include media-breakpoint-up(sm) {
+    grid-template-columns: 50fr 50fr;
   }
+
+  @include media-breakpoint-up(lg) {
+    grid-template-columns: 50fr 50fr 50fr 50fr;
+  }
+
+  display: grid;
+  grid-gap: $grid-gap;
 }

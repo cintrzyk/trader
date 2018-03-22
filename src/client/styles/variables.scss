@@ -1,13 +1,26 @@
+// Grid breakpoints
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px
+);
+
+$grid-gap: 10px;
+
+// Colors
 $bg-color: #17181c;
 $dark-color: #1e1f24;
-$light-dark-color: #25262a;
-$white-color: #f9f9f9;
 $gray-color: #b6b6b7;
-$woodsmoke-color: #18191c;
-$shark-color: #202226;
 $green-color: #89e07d;
 $light-blue-color: #00bcd5;
+$light-dark-color: #25262a;
 $red-color: #ff2d78;
+$shark-color: #202226;
+$white-color: #f9f9f9;
+$woodsmoke-color: #18191c;
 
+// Font sizes
 $fw-bold: 500;
 $fw-light: 200;
