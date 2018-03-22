@@ -1,5 +1,5 @@
 # Trader
-It is simple Code Review Slackbot that seeks for URLs to Github pull requests from defined organization and responds with additions / deletions and changed files count.
+It is simple Code Review Slackbot that seeks for URLs to Github pull requests from defined organization and responds with additions/deletions and changed files count.
 
 ## Getting Started
 To get started you need to:
