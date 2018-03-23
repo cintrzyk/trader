@@ -26,6 +26,15 @@
     font-weight: $fw-bold;
     color: $gray-color;
     letter-spacing: .5px;
+
+    .link {
+      color: $gray-color;
+    }
+  }
+
+  &__line-changed {
+    font-size: 12px;
+    margin-left: 5px;
   }
 
   &__time {

@@ -8,6 +8,14 @@ body {
   padding: 0;
 }
 
+.red {
+  color: $red-color;
+}
+
+.green {
+  color: $green-color;
+}
+
 .app {
   display: grid;
   font-family: 'Oswald', sans-serif;

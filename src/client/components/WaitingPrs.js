@@ -10,12 +10,17 @@ const WaitingPr = ({ pr, user, tradeAvailableAt }) => (
     </div>
     <div className="waiting-user__content">
       <div className="waiting-user__pr">
-        <a href={pr.html_url} className="link">
+        <a href={pr.html_url} target="_blank" className="link">
           {pr.html_url.substring(19)}
         </a>
+        <span className="waiting-user__line-changed green">+{pr.additions}</span>
+        <span className="waiting-user__line-changed red">-{pr.deletions}</span>
       </div>
       <div className="waiting-user__name">
-        {user.login}
+        <i className="fa fa-github" />{' '}
+        <a href={user.html_url} target="_blank" className="link">
+          {user.login}
+        </a>
       </div>
       <div className="waiting-user__time">
         <FromNowDate date={tradeAvailableAt} />
