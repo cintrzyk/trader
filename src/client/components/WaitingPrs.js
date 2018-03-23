@@ -4,25 +4,25 @@ import FromNowDate from './FromNowDate';
 import '../styles/components/waiting-prs.scss';
 
 const WaitingPr = ({ pr, user, tradeAvailableAt }) => (
-  <div className="waiting-user">
-    <div className="waiting-user__avatar">
-      <img src={user.avatar_url} alt={user.login} className="waiting-user__img" />
+  <div className="waiting-pr">
+    <div className="waiting-pr__avatar">
+      <img src={user.avatar_url} alt={user.login} className="waiting-pr__img" />
     </div>
-    <div className="waiting-user__content">
-      <div className="waiting-user__pr">
+    <div className="waiting-pr__content">
+      <div>
         <a href={pr.html_url} target="_blank" className="link">
           {pr.html_url.substring(19)}
         </a>
-        <span className="waiting-user__line-changed green">+{pr.additions}</span>
-        <span className="waiting-user__line-changed red">-{pr.deletions}</span>
+        <span className="waiting-pr__line-changed green">+{pr.additions}</span>
+        <span className="waiting-pr__line-changed red">-{pr.deletions}</span>
       </div>
-      <div className="waiting-user__name">
+      <div className="waiting-pr__name">
         <i className="fa fa-github" />{' '}
         <a href={user.html_url} target="_blank" className="link">
           {user.login}
         </a>
       </div>
-      <div className="waiting-user__time">
+      <div className="waiting-pr__time">
         <FromNowDate date={tradeAvailableAt} />
       </div>
     </div>
@@ -40,7 +40,7 @@ const WaitingPrs = ({ data }) => {
   ));
 
   return (
-    <div className="waiting-users">
+    <div className="waiting-prs">
       {mappedUsers}
     </div>
   );
