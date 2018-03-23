@@ -63,11 +63,12 @@ slack.on(RTM_EVENTS.MESSAGE, (payload) => {
   githubClient.fetchPullRequest(githubPRUrl[0]).then((response) => {
     console.log('Github API PR data:', response.data);
     const {
-      id, user, comments, commits, deletions, html_url, locked, merged, state, title, updated_at,
+      additions, id, user, comments, commits, deletions, html_url, locked, merged, state, title,
+      updated_at,
     } = response.data;
 
     firebase.firestore().collection('gh_prs').doc(id.toString()).set({
-      id, comments, commits, deletions, html_url, locked, merged, state, title,
+      additions, id, comments, commits, deletions, html_url, locked, merged, state, title,
       updated_at: moment(updated_at).toDate(),
       user_id: user.id,
     });
