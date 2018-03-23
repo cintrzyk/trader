@@ -139,7 +139,7 @@ class Dashboard extends Component {
     const bySeconds = data.map(d => moment(d.cr_end_at).diff(d.cr_start_at, 'seconds'));
     const avgInSeconds = (bySeconds.reduce((a, accu) => a + accu, 0) / data.length) || 0;
 
-    return moment().subtract(avgInSeconds, 's').toNow(true);
+    return avgInSeconds > 0 ? moment().subtract(avgInSeconds, 's').toNow(true) : '0';
   }
 
   render() {
