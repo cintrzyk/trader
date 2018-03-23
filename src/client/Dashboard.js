@@ -110,7 +110,8 @@ class Dashboard extends Component {
     const data = this.state.doneToday;
     const bySeconds = data.map(d => moment(d.cr_end_at).diff(d.cr_start_at, 'seconds'));
     const avgInSeconds = (bySeconds.reduce((a, accu) => a + accu, 0) / data.length) || 0;
-    return `${moment.duration(avgInSeconds, 'seconds').asMinutes().toFixed(1)}m`;
+
+    return moment().subtract(avgInSeconds, 's').toNow(true);
   }
 
   render() {
@@ -118,23 +119,23 @@ class Dashboard extends Component {
       <Fragment>
         <div className="badge-container">
           <StatsBadge
-            label="Unassigned"
-            icon="question-circle-o"
+            label="Waiting"
+            icon="users"
             value={this.state.unassigned}
           />
           <StatsBadge
             label="Ongoing"
-            icon="clock-o"
+            icon="tasks"
             value={this.state.pending}
           />
           <StatsBadge
             label="Completed Today"
-            icon="check"
+            icon="check-circle"
             value={this.state.doneToday.length}
           />
           <StatsBadge
-            label="Avg Time"
-            icon="bar-chart"
+            label="Avg Time Spent"
+            icon="clock-o"
             value={this.avgTimeInSecToday()}
           />
         </div>
