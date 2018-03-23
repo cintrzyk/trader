@@ -15,6 +15,15 @@ body {
   padding: 20px;
 }
 
+.link {
+  color: $white-color;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
 .badge-container {
   @include media-breakpoint-up(sm) {
     grid-template-columns: 50fr 50fr;
@@ -25,5 +34,5 @@ body {
   }
 
   display: grid;
-  grid-gap: $grid-gap;
+  grid-gap: 10px;
 }

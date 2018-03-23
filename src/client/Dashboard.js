@@ -3,14 +3,14 @@ import firebase from 'firebase';
 import moment from 'moment';
 import StatsBadge from './components/StatsBadge';
 import Panel from './components/Panel';
-import WaitingUsers from './components/WaitingUsers';
+import WaitingPrs from './components/WaitingPrs';
 
 class Dashboard extends Component {
   state = {
     pending: 0,
-    unassigned: 0,
+    unassigned: [],
     doneToday: [],
-    waitingUsers: [],
+    waitingPrs: {},
   };
 
   db = firebase.firestore();
@@ -20,7 +20,7 @@ class Dashboard extends Component {
     this.listenToUnassigned();
     this.listenToPending();
     this.listenToAvgTimeToday();
-    this.listenToWaitingUsers();
+    this.listenToWaitingPrs();
   }
 
   componentWillUnmount() {
@@ -30,37 +30,39 @@ class Dashboard extends Component {
     this.unsubscribeWaitingUsers();
   }
 
-  onWaitingUserAdded = async ({ prId, tradeAvailableAt }) => {
+  onWaitingPrAdded = async ({ prId, tradeAvailableAt }) => {
     const prDoc = await this.db.collection('gh_prs').doc(prId).get();
     const userId = prDoc.data().user_id;
     const userDoc = await this.db.collection('gh_users').doc(userId.toString()).get();
 
-    this.setState((prevState) => {
-      const users = prevState.waitingUsers.filter(u => u.id !== userId);
-      return {
-        waitingUsers: users.concat({
-          ...userDoc.data(),
-          gh_pr_id: prId,
-          trade_available_at: tradeAvailableAt,
-        }),
-      };
-    });
-  }
-
-  onWaitingUserRemoved = (prId) => {
     this.setState(prevState => ({
-      waitingUsers: prevState.waitingUsers.filter(u => u.gh_pr_id !== prId),
+      waitingPrs: {
+        ...prevState.waitingPrs,
+        [prId]: {
+          data: prDoc.data(),
+          meta: {
+            tradeAvailableAt,
+            user: userDoc.data(),
+          },
+        },
+      },
     }));
   }
 
-  onWaitingUserChange = snap => snap.docChanges.forEach((change) => {
+  onWaitingPrRemoved = (prId) => {
+    this.setState(prevState => ({
+      waitingPrs: prevState.waitingPrs.filter(u => u.gh_pr_id !== prId),
+    }));
+  }
+
+  onWaitingPrsChange = snap => snap.docChanges.forEach((change) => {
     const { gh_pr_id: prId, trade_available_at: tradeAvailableAt } = change.doc.data();
     switch (change.type) {
       case 'removed':
-        this.onWaitingUserRemoved(prId);
+        this.onWaitingPrRemoved(prId);
         break;
       case 'added':
-        this.onWaitingUserAdded({ prId, tradeAvailableAt });
+        this.onWaitingPrAdded({ prId, tradeAvailableAt });
         break;
       default:
     }
@@ -70,7 +72,28 @@ class Dashboard extends Component {
     this.unsubscribeUnassigned = this.db.collection('slack_messages')
       .where('cr_user_id', '==', null)
       .limit(this.limit)
-      .onSnapshot(snap => this.setState({ unassigned: snap.size }));
+      .onSnapshot((snap) => {
+        snap.docChanges.forEach((change) => {
+          switch (change.type) {
+            case 'added': {
+              const prId = change.doc.data().gh_pr_id;
+
+              if (!this.state.unassigned.includes(prId)) {
+                this.setState(prevState => ({
+                  unassigned: prevState.unassigned.concat(prId),
+                }));
+              }
+              break;
+            }
+            case 'removed':
+              this.setState(prevState => ({
+                unassigned: prevState.unassigned.filter(id => id !== change.doc.data().gh_pr_id),
+              }));
+              break;
+            default:
+          }
+        });
+      });
   }
 
   listenToPending() {
@@ -98,12 +121,12 @@ class Dashboard extends Component {
       });
   }
 
-  listenToWaitingUsers() {
+  listenToWaitingPrs() {
     this.unsubscribeWaitingUsers = this.db.collection('slack_messages')
       .where('cr_user_id', '==', null)
       .orderBy('trade_available_at', 'desc')
-      .limit(10)
-      .onSnapshot(this.onWaitingUserChange);
+      .limit(25)
+      .onSnapshot(this.onWaitingPrsChange);
   }
 
   avgTimeInSecToday() {
@@ -121,7 +144,7 @@ class Dashboard extends Component {
           <StatsBadge
             label="Waiting"
             icon="users"
-            value={this.state.unassigned}
+            value={this.state.unassigned.length}
           />
           <StatsBadge
             label="Ongoing"
@@ -139,9 +162,9 @@ class Dashboard extends Component {
             value={this.avgTimeInSecToday()}
           />
         </div>
-        {!!this.state.waitingUsers.length &&
+        {!!Object.keys(this.state.waitingPrs).length &&
           <Panel title="Waiting for review">
-            <WaitingUsers data={this.state.waitingUsers} />
+            <WaitingPrs data={this.state.waitingPrs} />
           </Panel>
         }
       </Fragment>
