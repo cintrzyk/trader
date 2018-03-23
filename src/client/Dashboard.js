@@ -50,9 +50,14 @@ class Dashboard extends Component {
   }
 
   onWaitingPrRemoved = (prId) => {
-    this.setState(prevState => ({
-      waitingPrs: prevState.waitingPrs.filter(u => u.gh_pr_id !== prId),
-    }));
+    this.setState((prevState) => {
+      const waitingPrs = { ...prevState.waitingPrs };
+      delete waitingPrs[prId];
+
+      return {
+        waitingPrs,
+      };
+    });
   }
 
   onWaitingPrsChange = snap => snap.docChanges.forEach((change) => {
