@@ -30,6 +30,13 @@ const sendMessageToSlackResponseURL = (responseURL, JSONmessage) => {
   });
 };
 
+const notifyUserReviewFinished = (userId, url, reviewer, duration) => {
+  slackWeb.chat.postMessage(userId, null, {
+    as_user: true,
+    text: `Howdy! <@${reviewer}> has finished your (${url}) pull request in ${duration}.`,
+  });
+};
+
 const closeDuplicatedReviewRequests = async (messageId) => {
   const doc = await db.collection('slack_messages').doc(messageId).get();
   const activeReview = doc.data();
@@ -65,13 +72,17 @@ router.post('/review', urlencodedParser, (req, res) => {
     });
     messageRef.get().then((doc) => {
       if (doc.exists) {
-        const { cr_start_at: startAt } = doc.data();
+        const { cr_start_at: startAt, user_id: userId } = doc.data();
         const duration = moment.duration(mEndAt.diff(startAt, 'seconds'), 'seconds').humanize();
+        const pullRequestUrl = actionJSONPayload.original_message.attachments[0].title_link;
+        const pullRequestTitle = actionJSONPayload.original_message.attachments[0].title;
+        const reviewer = actionJSONPayload.user.name;
         const msg = {
-          text: `:white_check_mark: ${actionJSONPayload.original_message.attachments[0].title} - review done by <@${actionJSONPayload.user.name}> in ${duration}`,
+          text: `:white_check_mark: <@${userId}>'s ${pullRequestTitle} - review done by <@${reviewer}> in ${duration}.`,
           attachments: [],
         };
         sendMessageToSlackResponseURL(actionJSONPayload.response_url, msg); // on review done
+        notifyUserReviewFinished(userId, pullRequestUrl, reviewer, duration);
       }
     });
   } else {
