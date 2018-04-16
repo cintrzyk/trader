@@ -3,6 +3,14 @@ export const github = {
   org: process.env.GITHUB_ORG_NAME,
 };
 
+export const google = {
+  callback: '/oauth/google_callback',
+  hd: process.env.GOOGLE_CLIENT_HD,
+  key: process.env.GOOGLE_CLIENT_ID,
+  scope: ['openid', 'email', 'profile'],
+  secret: process.env.GOOGLE_CLIENT_SECRET,
+};
+
 export const slack = {
   botToken: process.env.SLACK_BOT_TOKEN,
   verificationToken: process.env.SLACK_VERIFICATION_TOKEN,
@@ -28,7 +36,8 @@ export const firebaseClient = {
   projectId: process.env.client.FS_PROJECT_ID,
 };
 
-export const port = process.env.PORT;
-
+export const appSecret = process.env.APP_SECRET;
 export const isProduction = process.env.NODE_ENV === 'production';
 export const isSsrEnabled = process.env.SSR === true;
+export const host = process.env.HOST;
+export const port = process.env.PORT;
