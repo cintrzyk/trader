@@ -61,5 +61,6 @@ public/assets
 .server.build.js
 
 .DS_Store
+.idea
 
 firebaseAccountKey.json
