@@ -7,6 +7,7 @@ import request from 'request';
 import moment from 'moment';
 import { slack as config } from 'config/config';
 import firebase from '../db/firebase';
+import { ConcatenationScope } from 'webpack';
 
 const db = firebase.firestore();
 const router = express.Router();
@@ -73,7 +74,7 @@ router.post('/review', urlencodedParser, (req, res) => {
     messageRef.get().then((doc) => {
       if (doc.exists) {
         const { cr_start_at: startAt, user_id: userId } = doc.data();
-        const duration = moment.duration(mEndAt.diff(startAt, 'seconds'), 'seconds').humanize();
+        const duration = moment.duration(mEndAt.diff(startAt.toDate(), 'seconds'), 'seconds').humanize();
         const pullRequestUrl = actionJSONPayload.original_message.attachments[0].title_link;
         const pullRequestTitle = actionJSONPayload.original_message.attachments[0].title;
         const reviewer = actionJSONPayload.user.name;

@@ -9,9 +9,9 @@ const jsonParser = bodyParser.json();
 
 const verifySignature = (req) => {
   const payloadBody = JSON.stringify(req.body);
-  const signature = crypto.createHmac('sha1', GITHUB_APP_SECRET).update(payloadBody).digest('hex');
-  const ghSignature = req.headers['x-hub-signature'];
-  return crypto.timingSafeEqual(Buffer.from(`sha1=${signature}`), Buffer.from(ghSignature));
+  const signature = crypto.createHmac('sha256', GITHUB_APP_SECRET).update(payloadBody).digest('hex');
+  const ghSignature = req.headers['x-hub-signature-256'];
+  return crypto.timingSafeEqual(Buffer.from(`sha256=${signature}`), Buffer.from(ghSignature));
 };
 
 router.post('/', jsonParser, (req, res) => {

@@ -1,4 +1,4 @@
-import Client from 'backend/github/client';
+import Client from 'github/client';
 import apiMock from '../__mocks__/api';
 
 const client = new Client();

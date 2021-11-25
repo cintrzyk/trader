@@ -1,10 +1,8 @@
 # Trader
-It is simple Code Review Slackbot that seeks for URLs to Github pull requests from defined organization and responds with additions/deletions and changed files count.
+Slack Bot that helps organize code review assignments.
 
-## Getting Started
-To get started you need to:
+## How to get started?
 - install localtunnel
-- Set up your Bot in Slack
-- Copy across the SlackBot token in .env file
-- Set up your OAuth Token in Github
+- setup bot in Slack
+- set environment variables `.env` file
 - run Procfile.dev

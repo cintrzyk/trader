@@ -1,7 +1,7 @@
 import moment from 'moment';
 import { WebClient } from '@slack/client';
-import * as PrCollection from 'backend/db/collections/pull-requests';
-import firebase from 'backend/db/firebase';
+import * as PrCollection from 'db/collections/pull-requests';
+import firebase from 'db/firebase';
 import { slack as config } from 'config/config';
 
 const slackWeb = new WebClient(config.botToken);

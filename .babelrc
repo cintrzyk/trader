@@ -5,11 +5,9 @@
         "browsers": ["last 2 versions", "safari >= 7"],
         "node": "current"
       }
-    }],
-    "react"
+    }]
   ],
   "plugins": [
-    "react-hot-loader/babel",
     "transform-class-properties",
     "transform-object-rest-spread",
     "transform-async-to-generator"
