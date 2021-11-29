@@ -6,7 +6,7 @@ import { appSecret } from 'config/config';
 import firebase from './db/firebase';
 import botRoutes from './routes/bot';
 import githubRoutes from './routes/github';
-import slack from './slack';
+import slackRtmClient from './slack/rtm-client';
 
 const FirestoreStore = require('firestore-store')(session);
 
@@ -29,6 +29,6 @@ app.get('/', (req, res) => {
 app.use('/bot', botRoutes);
 app.use('/github', githubRoutes);
 
-slack.start();
+slackRtmClient.start();
 
 export default app;

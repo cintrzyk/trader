@@ -6,51 +6,19 @@ import {
 } from '@slack/client';
 import moment from 'moment';
 import { slack as config } from 'config/config';
-import GithubClient from './github/client';
-import { parseGithubPRText } from './github/pr-parser';
-import firebase from './db/firebase';
+import GithubClient from '../github/client';
+import { parseGithubPRText } from '../github/pr-parser';
+import firebase from '../db/firebase';
+import newCodeReviewMessage from './new-code-review-message';
 
-const slack = new RtmClient(config.botToken);
+const rtmClient = new RtmClient(config.botToken);
 const slackWeb = new WebClient(config.botToken);
 
-const getGithubMessage = data => [{
-  title: data.title,
-  title_link: data.html_url,
-  text: data.body.split('\n').slice(0,2).join('\n'),
-  color: '#e1e4e8',
-  author_icon: data.user.avatar_url,
-  author_link: data.user.url,
-  author_name: data.user.login,
-  footer: 'Github API',
-  footer_icon: 'https://d2bbtvgnhux6eq.cloudfront.net/assets/favicon-github-0332aa660c6548e285079410739397df.png',
-  ts: moment(data.created_at).unix(),
-  mrkdwn_in: ['pretext', 'text', 'fields'],
-  callback_id: 'review_action',
-  fields: [
-    {
-      title: `+${data.additions} -${data.deletions}`,
-      value: `LOC changed in *${data.changed_files}* files`,
-      short: true,
-    },
-    {
-      title: `${data.commits}`,
-      value: 'Commits',
-      short: true,
-    },
-  ],
-  actions: [{
-    name: 'review',
-    text: ':eyeglasses: Code review',
-    type: 'button',
-    value: 'review',
-  }],
-}];
-
-slack.on(CLIENT_EVENTS.RTM.RTM_CONNECTION_OPENED, () => {
+rtmClient.on(CLIENT_EVENTS.RTM.RTM_CONNECTION_OPENED, () => {
   console.log('Slack RTM client connected!');
 });
 
-slack.on(RTM_EVENTS.MESSAGE, (payload) => {
+rtmClient.on(RTM_EVENTS.MESSAGE, (payload) => {
   console.log('Slack RTM message payload:', payload);
   const githubPRUrl = parseGithubPRText(payload.text);
 
@@ -83,7 +51,7 @@ slack.on(RTM_EVENTS.MESSAGE, (payload) => {
 
     return slackWeb.chat.postMessage(payload.channel, null, {
       as_user: true,
-      attachments: getGithubMessage(response.data),
+      attachments: newCodeReviewMessage(response.data),
     }).then((res) => {
       if (res.ok) {
         const messageId = `${payload.channel}__${res.ts}`;
@@ -111,4 +79,4 @@ slack.on(RTM_EVENTS.MESSAGE, (payload) => {
   });
 });
 
-export default slack;
+export default rtmClient;
